@@ -8,24 +8,32 @@ const Otsikko = (props) => {
     )
   }
 
-const Osa = (props) => {
-  return (
-    <div>
-      <p>{props.osa.nimi} {props.osa.tehtavia}</p>
-    </div>
-  )
+const Kurssi = (props) => {
+    return (
+        <div>
+            <Otsikko kurssi={props.kurssi}/>
+            <Sisalto osat={props.kurssi.osat}/>
+        </div>
+    )
 }
 
 const Sisalto = (props) => {
     return (
-      <div>
-        <Osa osa={props.osat[0]}/>
-        <Osa osa={props.osat[1]}/>
-        <Osa osa={props.osat[2]}/>
-      </div>
+        <div>
+            <ul>
+                {props.osat.map(osa=><Osa key={osa.id} nimi={osa.nimi} tehtavia={osa.tehtavia}/>)}
+            </ul>
+        </div>
     )
 }
 
+const Osa = ({nimi, tehtavia}) => {
+    return (
+      <div>
+        <p>{nimi} {tehtavia}</p>
+      </div>
+    )
+  }
 
 const Yhteensa = (props) => {
     return (
@@ -36,34 +44,34 @@ const Yhteensa = (props) => {
   }
 
 
-const App = () => {
-
-  const kurssi = {
-    nimi: 'Half Stack -sovelluskehitys',
-    osat: [
-      {
-        nimi: 'Reactin perusteet',
-        tehtavia: 10
-      },
-      {
-        nimi: 'Tiedonvälitys propseilla',
-        tehtavia: 7
-      },
-      {
-        nimi: 'Komponenttien tila',
-        tehtavia: 14
-      }
-    ]
+  const App = () => {
+    const kurssi = {
+      nimi: 'Half Stack -sovelluskehitys',
+      osat: [
+        {
+          nimi: 'Reactin perusteet',
+          tehtavia: 10,
+          id: 1
+        },
+        {
+          nimi: 'Tiedonvälitys propseilla',
+          tehtavia: 7,
+          id: 2
+        },
+        {
+          nimi: 'Komponenttien tila',
+          tehtavia: 14,
+          id: 3
+        }
+      ]
+    }
+  
+    return (
+      <div>
+        <Kurssi kurssi={kurssi} />
+      </div>
+    )
   }
-
-  return (
-    <div>
-      <Otsikko kurssi={kurssi}/>
-      <Sisalto osat={kurssi.osat}/>
-      <Yhteensa osat={kurssi.osat}/>  
-    </div>
-  )
-}
 
 ReactDOM.render(
   <App />,
