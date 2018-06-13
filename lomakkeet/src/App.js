@@ -32,13 +32,39 @@ class App extends React.Component {
     }
   }
 
+  addPerson = (event) => {
+        event.preventDefault()
+        console.log('nappi painettu')
+        const personObject = {
+            name: this.state.newName
+        }
+
+        //add new object to array with concat (state should not be manipulated directly)
+        const persons = this.state.persons.concat(personObject)
+
+        //replace the old persons array with the updated version.
+        this.setState({
+            persons: persons,
+            newName: ''
+        })
+  }
+
+  handleNameChange = (event) => {
+      console.log(event.target.value)
+      this.setState({ newName: event.target.value })
+  }
+
   render() {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <form>
+        <form onSubmit={this.addPerson}>
           <div>
-            nimi: <input />
+            nimi: 
+            <input 
+                value={this.state.newName}
+                onChange={this.handleNameChange}
+            />
           </div>
           <div>
             <button type="submit">lisää</button>
