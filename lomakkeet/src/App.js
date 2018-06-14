@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Persons = (props) => {
     return (
         <div>
@@ -35,18 +36,27 @@ class App extends React.Component {
   addPerson = (event) => {
         event.preventDefault()
         console.log('nappi painettu')
+        
         const personObject = {
             name: this.state.newName
         }
 
-        //add new object to array with concat (state should not be manipulated directly)
-        const persons = this.state.persons.concat(personObject)
+        //check if a record with the same name already exist
+        if (this.state.persons.findIndex( (element) => {
+            return element.name === personObject.name
+        }) !== -1) { alert('Nimi on jo lisätty') } 
+        else {
+            //add new object to array with concat (state should not be manipulated directly)
+            const persons = this.state.persons.concat(personObject)
 
-        //replace the old persons array with the updated version.
-        this.setState({
-            persons: persons,
-            newName: ''
-        })
+            //replace the old persons array with the updated version.
+            this.setState({
+                persons: persons,
+                newName: ''
+             })
+        }
+
+
   }
 
   handleNameChange = (event) => {
