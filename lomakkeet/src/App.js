@@ -6,17 +6,22 @@ const Persons = (props) => {
         <div>
             <table>
                 <tbody> 
-                    {props.persons.map(person => <Person key={person.name} name={person.name}/>)}
+                    {props.persons.map(person => 
+                    <Person key={person.name} 
+                    name={person.name} 
+                    number={person.number}
+                    />)}
                 </tbody>
             </table>
         </div>
     )
 }
 
-const Person = ({name}) => {
+const Person = ({name, number}) => {
     return (
         <tr>
             <td>{name}</td>
+            <td>{number}</td>
         </tr>
     )
 }
@@ -26,10 +31,11 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' },
-        { name: 'Joku Toinen'}
+        { name: 'Arto Hellas', number: '123-456 321' },
+        { name: 'Joku Toinen', number: '4531244 02'}
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
     }
   }
 
@@ -38,7 +44,8 @@ class App extends React.Component {
         console.log('nappi painettu')
         
         const personObject = {
-            name: this.state.newName
+            name: this.state.newName,
+            number: this.state.newNumber
         }
 
         //check if a record with the same name already exist
@@ -52,7 +59,8 @@ class App extends React.Component {
             //replace the old persons array with the updated version.
             this.setState({
                 persons: persons,
-                newName: ''
+                newName: '',
+                newNumber: ''
              })
         }
 
@@ -62,6 +70,11 @@ class App extends React.Component {
   handleNameChange = (event) => {
       console.log(event.target.value)
       this.setState({ newName: event.target.value })
+  }
+
+  handleNumberChange = (event) => {
+    console.log(event.target.value)
+    this.setState({ newNumber: event.target.value })
   }
 
   render() {
@@ -74,6 +87,14 @@ class App extends React.Component {
             <input 
                 value={this.state.newName}
                 onChange={this.handleNameChange}
+            />
+            
+          </div>
+          <div>
+            numero:
+            <input
+                value={this.state.newNumber}
+                onChange={this.handleNumberChange}
             />
           </div>
           <div>
