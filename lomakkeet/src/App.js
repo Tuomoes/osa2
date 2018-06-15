@@ -60,11 +60,10 @@ class App extends React.Component {
             this.setState({
                 persons: persons,
                 newName: '',
-                newNumber: ''
+                newNumber: '',
+                filter: ''
              })
         }
-
-
   }
 
   handleNameChange = (event) => {
@@ -77,10 +76,21 @@ class App extends React.Component {
     this.setState({ newNumber: event.target.value })
   }
 
+  handleFilterChange = (event) => {
+    console.log(event.target.value)
+    this.setState({ filter: event.target.value })
+  }
+
   render() {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        rajaa näytettäviä:
+        <input
+            value={this.state.filter}
+            onChange={this.handleFilterChange}
+        />
+        <h3>Lisää uusi</h3>
         <form onSubmit={this.addPerson}>
           <div>
             nimi: 
@@ -101,7 +111,7 @@ class App extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
-        <h2>Numerot</h2>
+        <h3>Numerot</h3>
         
         <Persons persons={this.state.persons} />
 
