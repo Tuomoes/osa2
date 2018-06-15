@@ -35,7 +35,8 @@ class App extends React.Component {
         { name: 'Joku Toinen', number: '4531244 02'}
       ],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      filter: ''
     }
   }
 
@@ -60,8 +61,7 @@ class App extends React.Component {
             this.setState({
                 persons: persons,
                 newName: '',
-                newNumber: '',
-                filter: ''
+                newNumber: ''
              })
         }
   }
@@ -88,7 +88,7 @@ class App extends React.Component {
         rajaa näytettäviä:
         <input
             value={this.state.filter}
-            onChange={this.handleFilterChange}
+            onChange={this.handleFilterChange}  
         />
         <h3>Lisää uusi</h3>
         <form onSubmit={this.addPerson}>
@@ -113,7 +113,8 @@ class App extends React.Component {
         </form>
         <h3>Numerot</h3>
         
-        <Persons persons={this.state.persons} />
+        <Persons persons={this.state.persons.filter(person => person.name.toLocaleLowerCase()
+        .match(this.state.filter.toLocaleLowerCase(), 0))} />
 
       </div>
     )
