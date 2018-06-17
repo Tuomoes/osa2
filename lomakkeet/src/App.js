@@ -1,5 +1,7 @@
 import React from 'react'
 import FilteredPersons from './components/filteredPersons'
+import axios from 'axios'
+
 
 
 
@@ -16,6 +18,15 @@ class App extends React.Component {
       newNumber: '',
       filter: ''
     }
+  }
+
+  componentDidMount() {
+    console.log('successfully mounted')
+    axios.get('http://localhost:3001/persons').then(response => 
+    { 
+      console.log('promise fulfilled')
+      this.setState({ persons: response.data});
+    })
   }
 
   addPerson = (event) => {
