@@ -1,30 +1,8 @@
-import React from 'react';
+import React from 'react'
+import FilteredPersons from './components/filteredPersons'
 
 
-const Persons = (props) => {
-    return (
-        <div>
-            <table>
-                <tbody> 
-                    {props.persons.map(person => 
-                    <Person key={person.name} 
-                    name={person.name} 
-                    number={person.number}
-                    />)}
-                </tbody>
-            </table>
-        </div>
-    )
-}
 
-const Person = ({name, number}) => {
-    return (
-        <tr>
-            <td>{name}</td>
-            <td>{number}</td>
-        </tr>
-    )
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -113,8 +91,7 @@ class App extends React.Component {
         </form>
         <h3>Numerot</h3>
         
-        <Persons persons={this.state.persons.filter(person => person.name.toLocaleLowerCase()
-        .match(this.state.filter.toLocaleLowerCase(), 0))} />
+        <FilteredPersons persons={this.state.persons} filter={this.state.filter}/>
 
       </div>
     )
