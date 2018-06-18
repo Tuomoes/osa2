@@ -1,20 +1,65 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const Countries = (props) => {
+const FilterCountries = (props) => {
+  return (
+    <ShowCountyData countries={props.countries.filter((country) => country.name.toLocaleLowerCase().match(props.filter.toLocaleLowerCase()))}/>
+  )
+}
+
+const ShowCountyData = (props) => {
+  if (props.countries.length > 10) {
+    return(
+      <div>
+        too many matches, specify another filter
+      </div>
+    )
+
+  }
+  else if (props.countries.length === 1) {
+    return (
+      <CountryDetails country={props.countries[0]}/>
+    )
+  }
+  else if (props.countries.length === 0) {
+    return(
+      <div>
+        no countries found, specify a different filter
+      </div>
+    )
+  }
+  else {
+    return (
+      <CountryList countries={props.countries}/>
+    )
+  }
+
+}
+
+const CountryList = (props) => {
   return (
     <div>
       <table>
        <tbody>
-        {props.countries.map((country) => <Country key={country.name} name={country.name}/>)}
+        {props.countries.map((country) => <CountryListItem key={country.name} name={country.name}/>)}
        </tbody>
       </table>
    </div>
   )
-
 }
 
-const Country = ({name}) => {
+const CountryDetails = (props) => {
+  return (
+    <div>
+      <h1>{props.country.name}</h1>
+      <p>capital: {props.country.capital}</p>
+      <p>population: {props.country.population}</p>
+      <p><img src={props.country.flag} width={400}  alt={'country flag'}/></p>
+    </div>
+  )
+}
+
+const CountryListItem = ({name}) => {
   return (
     <tr>
       <td>{name}</td>
@@ -29,7 +74,8 @@ class App extends Component {
     this.state = {
       countries: [
         {name: ''}
-      ]
+      ],
+      filter: ''
     }
   }
 
@@ -41,10 +87,20 @@ class App extends Component {
     })
   }
 
+  handleFilterChange = (event) => {
+    console.log(event.target.value)
+    this.setState( {filter: event.target.value} )
+  }
+
   render() {
     return (
       <div>
-        <Countries countries={this.state.countries}/>
+        find countries:
+        <input
+          value={this.state.filter}
+          onChange={this.handleFilterChange}
+        />
+        <FilterCountries countries={this.state.countries} filter={this.state.filter}/>
       </div>
     );
   }
