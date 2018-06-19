@@ -52,6 +52,12 @@ class App extends React.Component {
                 newName: '',
                 newNumber: ''
              })
+
+             //add new object to server
+             axios.post('http://localhost:3001/persons', personObject)
+              .then(response => {
+                console.log(response)
+              })
         }
   }
 
