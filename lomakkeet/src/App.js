@@ -42,9 +42,6 @@ class App extends React.Component {
         else {
             //add new object to array with concat (state should not be manipulated directly)
             
-
-
-
              //add new object to server
              personsService.createObj(personObject)
               .then(response => {
@@ -64,17 +61,21 @@ class App extends React.Component {
 
   deletePerson = (id) => {
       return () => {
-        
-        personsService.deleteObj(id).then(
-          response => {
-            console.log(response)
-          }
-        )
-
-        const persons = this.state.persons.filter(person => {return person.id !== id})
-        this.setState({ persons: persons});
+        const personName = this.state.persons.find(person => person.id === id).name
+        if (window.confirm('poistetaanko ' + personName + '?')) {
+          personsService.deleteObj(id).then(
+            response => {
+              console.log(response)
+            }
+          )
+  
+          const persons = this.state.persons.filter(person => {return person.id !== id})
+          this.setState({ persons: persons});
+        }
       }
+
   }
+  
 
   handleNameChange = (event) => {
       console.log(event.target.value)
