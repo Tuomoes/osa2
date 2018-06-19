@@ -38,7 +38,25 @@ class App extends React.Component {
         //check if a record with the same name already exist
         if (this.state.persons.findIndex( (element) => {
             return element.name === personObject.name
-        }) !== -1) { alert('Nimi on jo lisätty') } 
+        }) !== -1) { 
+          //ask if user want's to replace the old record
+          const question = personObject.name + ' on jo luettelossa, korvataanko numero uudella?'
+           if (window.confirm(question)) {
+              const originalPerson = this.state.persons.find(person => person.name === personObject.name)
+              const editedPerson = {...originalPerson, number: personObject.number}
+
+              personsService.modifyObj(editedPerson).then(response => {
+                console.log(response)
+                const personsEdited = this.state.persons.map(person => person.id !== editedPerson.id ? person : response.data)
+                
+                this.setState({
+                  persons: personsEdited,
+                  newName: '',
+                  newNumber: ''
+                })
+              })
+           } 
+        } 
         else {
             //add new object to array with concat (state should not be manipulated directly)
             
@@ -47,7 +65,7 @@ class App extends React.Component {
               .then(response => {
                 console.log(response)
                 const persons = this.state.persons.concat(response.data)
-                              //clear input fields
+
                 this.setState({
                   persons: persons,
                   newName: '',

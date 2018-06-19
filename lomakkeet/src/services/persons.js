@@ -9,8 +9,12 @@ const createObj = (newPersonObject) => {
     return axios.post(baseUrl, newPersonObject)
 }
 
+const modifyObj = (editedPersonObject) => {
+    return axios.put((baseUrl + '/' + editedPersonObject.id), editedPersonObject)
+}
+
 const deleteObj = (id) => {
     return axios.delete(baseUrl + '/' + id)
 }
 
-export default { getAll, createObj, deleteObj }
+export default { getAll, createObj, deleteObj, modifyObj }
