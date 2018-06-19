@@ -1,9 +1,6 @@
 import React from 'react'
 import FilteredPersons from './components/filteredPersons'
-import axios from 'axios'
-
-
-
+import personsService from './services/persons'
 
 
 class App extends React.Component {
@@ -22,7 +19,7 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('successfully mounted')
-    axios.get('http://localhost:3001/persons').then(response => 
+    personsService.getAll().then(response => 
     { 
       console.log('promise fulfilled')
       this.setState({ persons: response.data});
@@ -54,7 +51,7 @@ class App extends React.Component {
              })
 
              //add new object to server
-             axios.post('http://localhost:3001/persons', personObject)
+             personsService.create(personObject)
               .then(response => {
                 console.log(response)
               })
