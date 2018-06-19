@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const FilterCountries = (props) => {
   return (
-    <ShowCountyData countries={props.countries.filter((country) => country.name.toLocaleLowerCase().match(props.filter.toLocaleLowerCase()))}/>
+    <ShowCountyData clickAction={props.clickAction} countries={props.countries.filter((country) => country.name.toLocaleLowerCase().match(props.filter.toLocaleLowerCase()))}/>
   )
 }
 
@@ -30,7 +30,7 @@ const ShowCountyData = (props) => {
   }
   else {
     return (
-      <CountryList countries={props.countries}/>
+      <CountryList clickAction={props.clickAction} countries={props.countries}/>
     )
   }
 
@@ -41,7 +41,7 @@ const CountryList = (props) => {
     <div>
       <table>
        <tbody>
-        {props.countries.map((country) => <CountryListItem key={country.name} name={country.name}/>)}
+        {props.countries.map((country) => <CountryListItem key={country.name} clickAction={props.clickAction} name={country.name}/>)}
        </tbody>
       </table>
    </div>
@@ -59,10 +59,12 @@ const CountryDetails = (props) => {
   )
 }
 
-const CountryListItem = ({name}) => {
+const CountryListItem = ({name, clickAction}) => {
   return (
     <tr>
-      <td>{name}</td>
+      <td onClick={clickAction(name)}>
+        {name}
+      </td>
     </tr>
   )
 
@@ -92,6 +94,14 @@ class App extends Component {
     this.setState( {filter: event.target.value} )
   }
 
+  handleFilterChangeWithName = (name) => {
+    return () => {
+      console.log('clicked name:', name)
+      this.setState( {filter: name} )
+    }
+
+  }
+
   render() {
     return (
       <div>
@@ -100,7 +110,7 @@ class App extends Component {
           value={this.state.filter}
           onChange={this.handleFilterChange}
         />
-        <FilterCountries countries={this.state.countries} filter={this.state.filter}/>
+        <FilterCountries countries={this.state.countries} filter={this.state.filter} clickAction={this.handleFilterChangeWithName}/>
       </div>
     );
   }
