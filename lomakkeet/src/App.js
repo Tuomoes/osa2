@@ -1,6 +1,7 @@
 import React from 'react'
 import FilteredPersons from './components/filteredPersons'
 import personsService from './services/persons'
+import Notification from './components/notification'
 
 
 class App extends React.Component {
@@ -52,7 +53,8 @@ class App extends React.Component {
                 this.setState({
                   persons: personsEdited,
                   newName: '',
-                  newNumber: ''
+                  newNumber: '',
+                  error: null
                 })
               })
            } 
@@ -113,6 +115,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Notification.ErrorNotification message={this.state.error}/>
         <h2>Puhelinluettelo</h2>
         rajaa näytettäviä:
         <input
