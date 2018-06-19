@@ -8,8 +8,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas', number: '123-456 321' },
-        { name: 'Joku Toinen', number: '4531244 02'}
+        { id: '1', name: 'Arto Hellas', number: '123-456 321' },
+        { id: '2', name: 'Joku Toinen', number: '4531244 02' }
       ],
       newName: '',
       newNumber: '',
@@ -41,21 +41,39 @@ class App extends React.Component {
         }) !== -1) { alert('Nimi on jo lisätty') } 
         else {
             //add new object to array with concat (state should not be manipulated directly)
-            const persons = this.state.persons.concat(personObject)
+            
 
-            //replace the old persons array with the updated version.
-            this.setState({
-                persons: persons,
-                newName: '',
-                newNumber: ''
-             })
+
 
              //add new object to server
-             personsService.create(personObject)
+             personsService.createObj(personObject)
               .then(response => {
                 console.log(response)
+                const persons = this.state.persons.concat(response.data)
+                              //clear input fields
+                this.setState({
+                  persons: persons,
+                  newName: '',
+                  newNumber: ''
+                })
               })
+
+
         }
+  }
+
+  deletePerson = (id) => {
+      return () => {
+        
+        personsService.deleteObj(id).then(
+          response => {
+            console.log(response)
+          }
+        )
+
+        const persons = this.state.persons.filter(person => {return person.id !== id})
+        this.setState({ persons: persons});
+      }
   }
 
   handleNameChange = (event) => {
@@ -105,7 +123,7 @@ class App extends React.Component {
         </form>
         <h3>Numerot</h3>
         
-        <FilteredPersons persons={this.state.persons} filter={this.state.filter}/>
+        <FilteredPersons persons={this.state.persons} filter={this.state.filter} deleteAction={this.deletePerson}/>
 
       </div>
     )

@@ -6,28 +6,23 @@
       "id": 1
     },
     {
-      "name": "Martti Tienari",
-      "number": "040-123456",
-      "id": 2
-    },
-    {
       "name": "Arto Järvinen",
       "number": "040-123456",
       "id": 3
     },
     {
-      "name": "Lea Kutvonen",
-      "number": "040-123456",
+      "name": "Mika Häkkinen",
+      "number": "Vitunnopee-123",
       "id": 4
     },
     {
-      "name": "Matti Putkonen",
-      "number": "050 654321",
+      "name": "john ilves",
+      "number": "1256774323",
       "id": 5
     },
     {
-      "name": "Mikko Kivinen",
-      "number": "4444444441",
+      "name": "boris Jeltsin",
+      "number": "125678",
       "id": 6
     }
   ]
