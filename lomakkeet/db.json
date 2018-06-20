@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "7777",
+      "number": "1111",
       "id": 1
     },
     {
@@ -19,6 +19,21 @@
       "name": "Jere Juupasuuuasdgas d",
       "number": "123456789",
       "id": 6
+    },
+    {
+      "name": "aarne järvinen",
+      "number": "133211",
+      "id": 7
+    },
+    {
+      "name": "hoonooaaa",
+      "number": "1234567",
+      "id": 8
+    },
+    {
+      "name": "Niko Roosberg",
+      "number": "666",
+      "id": 9
     }
   ]
 }

@@ -1,14 +1,14 @@
 import React from 'react'
 
-const ErrorNotification = ({message}) => {
+const Notification = ({message}) => {
     if (message === null) {
         return null
     }
     return (
-        <div className="error">
+        <div className="pop-up">
             {message}
         </div>
     )
 }
 
-export default {ErrorNotification}
+export default {Notification}

@@ -2,6 +2,7 @@ import React from 'react'
 import FilteredPersons from './components/filteredPersons'
 import personsService from './services/persons'
 import Notification from './components/notification'
+import './App.css'
 
 
 class App extends React.Component {
@@ -14,7 +15,8 @@ class App extends React.Component {
       ],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      notification: null
     }
   }
 
@@ -54,8 +56,12 @@ class App extends React.Component {
                   persons: personsEdited,
                   newName: '',
                   newNumber: '',
-                  error: null
+                  notification: 'muutettiin ' + editedPerson.name
                 })
+
+                setTimeout(() => {
+                  this.setState({notification: null})
+                }, 5000)
               })
            } 
         } 
@@ -71,9 +77,17 @@ class App extends React.Component {
                 this.setState({
                   persons: persons,
                   newName: '',
-                  newNumber: ''
+                  newNumber: '',
+                  notification: 'lisättiin ' + response.data.name
                 })
+
+                setTimeout(() => {
+                  this.setState({notification: null})
+                }, 5000)
+
               })
+            
+            
 
 
         }
@@ -90,7 +104,14 @@ class App extends React.Component {
           )
   
           const persons = this.state.persons.filter(person => {return person.id !== id})
-          this.setState({ persons: persons});
+          this.setState({ 
+            persons: persons,
+            notification: 'poistettiin ' + personName 
+          });
+          
+          setTimeout(() => {
+            this.setState({notification: null})
+          }, 5000)
         }
       }
 
@@ -115,7 +136,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Notification.ErrorNotification message={this.state.error}/>
+        <Notification.Notification message={this.state.notification}/>
         <h2>Puhelinluettelo</h2>
         rajaa näytettäviä:
         <input
