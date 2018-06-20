@@ -62,7 +62,26 @@ class App extends React.Component {
                 setTimeout(() => {
                   this.setState({notification: null})
                 }, 5000)
+              }).catch(error => {
+                //if person to be edited is missing from the server. It is added again.
+                personsService.createObj(personObject)
+                  .then(response => {
+                  console.log(response)
+                  const persons = this.state.persons.filter(person => {return person.name !== response.data.name}).concat(response.data)
+
+                  this.setState({
+                    persons: persons,
+                    newName: '',
+                    newNumber: '',
+                    notification: 'muutettiin ' + response.data.name
+                  })
+
+                  setTimeout(() => {
+                    this.setState({notification: null})
+                  }, 5000)
+
               })
+            })
            } 
         } 
         else {
